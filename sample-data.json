@@ -1,0 +1,37 @@
+{
+  "experiment_id": "CX-2024-001",
+  "experiment_meta": {
+    "input_type": "Biochar",
+    "input_mass_g": 19.0,
+    "calculated_biochar_g": 19.0,
+    "resulting_total_mass_g": 36.76,
+    "predicted_batch_uptake_g": 2.27,
+    "efficiency_g_per_g": 0.061,
+    "biochar_concentration_percent": 51.7
+  },
+  "components_grams": {
+    "Starch": 8.19,
+    "Gelatin": 5.46,
+    "Glycerol": 4.12,
+    "Biochar": 19.0
+  },
+  "biochar_prep": {
+    "source_material_note": "Start with 19.0g Biochar",
+    "step_1": "Grind Rice Straw",
+    "step_2_acid_wash": "Soak in HCL (30%) for 71 minutes",
+    "step_3_pyrolysis": "Heat at 572°C",
+    "activation_goal": "Target Surface Area: 1349 m2/g"
+  },
+  "process_steps": {
+    "mixing_temp_c": 85,
+    "stirring_speed_rpm": 500,
+    "dry_hours": 24,
+    "curing_temp_c": 25
+  },
+  "prediction_metrics": {
+    "Gibbs_Energy": -25060,
+    "Shannon_Entropy": 0.53,
+    "Virtual_Surface_Area_m2g": 1349
+  },
+  "ai_score": 1546
+}
