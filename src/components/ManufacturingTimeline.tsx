@@ -1,6 +1,7 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Clock, Hammer, Droplet, Flame, Wind, Sun, Beaker, Plus, Minus, CheckCircle2 } from 'lucide-react';
+import { Clock, Hammer, Droplet, Flame, Wind, Sun, Beaker, Plus, Minus, CheckCircle2, ExternalLink } from 'lucide-react';
 import { ExperimentData } from '../types';
 
 interface ManufacturingTimelineProps {
@@ -18,6 +19,7 @@ interface Step {
 }
 
 export default function ManufacturingTimeline({ data }: ManufacturingTimelineProps) {
+  const navigate = useNavigate();
   const [expandedStep, setExpandedStep] = useState<number | null>(null);
   const inputType = data.experiment_meta.input_type;
   const isBiocharInput = inputType.toLowerCase() === 'biochar';
@@ -155,22 +157,33 @@ export default function ManufacturingTimeline({ data }: ManufacturingTimelinePro
                         </span>
                       )}
                     </div>
-                    <motion.button
-                      onClick={() => toggleStep(step.number)}
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.95 }}
-                      className={`p-2 rounded-lg transition-colors ${
-                        expandedStep === step.number
-                          ? 'bg-cyan-500/20 text-cyan-400'
-                          : 'bg-slate-800/50 text-slate-400 hover:bg-slate-700/50 hover:text-cyan-400'
-                      }`}
-                    >
-                      {expandedStep === step.number ? (
-                        <Minus className="w-4 h-4" />
-                      ) : (
-                        <Plus className="w-4 h-4" />
-                      )}
-                    </motion.button>
+                    <div className="flex items-center gap-2">
+                      <motion.button
+                        onClick={() => navigate(`/protocol/${step.number}`)}
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="p-2 rounded-lg bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-colors"
+                        title="View detailed step information"
+                      >
+                        <ExternalLink className="w-4 h-4" />
+                      </motion.button>
+                      <motion.button
+                        onClick={() => toggleStep(step.number)}
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.95 }}
+                        className={`p-2 rounded-lg transition-colors ${
+                          expandedStep === step.number
+                            ? 'bg-cyan-500/20 text-cyan-400'
+                            : 'bg-slate-800/50 text-slate-400 hover:bg-slate-700/50 hover:text-cyan-400'
+                        }`}
+                      >
+                        {expandedStep === step.number ? (
+                          <Minus className="w-4 h-4" />
+                        ) : (
+                          <Plus className="w-4 h-4" />
+                        )}
+                      </motion.button>
+                    </div>
                   </div>
 
                   <p className={`leading-relaxed ${step.isPreProcessed ? 'text-slate-500' : 'text-slate-300'}`}>

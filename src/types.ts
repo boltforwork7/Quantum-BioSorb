@@ -1,3 +1,20 @@
+export interface StepParameter {
+  label: string;
+  value: string | number;
+  unit?: string;
+}
+
+export interface StepDetail {
+  id: number;
+  title: string;
+  description: string;
+  status: 'pending' | 'in_progress' | 'completed' | 'critical';
+  parameters: StepParameter[];
+  scientific_explanation: string;
+  safety_warning?: string;
+  image_placeholder?: string;
+}
+
 export interface ExperimentData {
   experiment_id?: string;
   experiment_meta: {
@@ -34,4 +51,5 @@ export interface ExperimentData {
     Virtual_Surface_Area_m2g: number;
   };
   ai_score: number;
+  steps?: StepDetail[];
 }
