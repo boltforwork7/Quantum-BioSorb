@@ -224,7 +224,7 @@ export function generateStepsFromData(data: ExperimentData): StepDetail[] {
       title: 'Membrane Casting',
       description: 'Spreading the final mixture on a film (before drying)',
       status: 'pending',
-      image_filename: 'step11.jpg',
+      image_filename: 'step10.jpg',
       parameters: [
         {
           label: 'Total Mass',
