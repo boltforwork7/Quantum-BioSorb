@@ -150,7 +150,7 @@ export function generateStepsFromData(data: ExperimentData): StepDetail[] {
       title: 'Soaking Phase',
       description: 'The visible interaction during the soaking process',
       status: 'in_progress',
-      image_filename: 'step8.jpg',
+      image_filename: 'step7.jpg',
       parameters: [
         {
           label: 'Medium',
