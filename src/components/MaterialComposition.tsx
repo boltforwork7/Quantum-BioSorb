@@ -56,12 +56,24 @@ export default function MaterialComposition({ data }: MaterialCompositionProps) 
               </Pie>
               <Tooltip
                 contentStyle={{
-                  backgroundColor: '#1e293b',
-                  border: '1px solid #334155',
-                  borderRadius: '0.5rem',
+                  backgroundColor: 'rgba(15, 23, 42, 0.85)',
+                  backdropFilter: 'blur(8px)',
+                  border: '1px solid rgba(59, 130, 246, 0.3)',
+                  borderRadius: '0.75rem',
                   color: '#fff',
+                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.1)',
+                  padding: '0.75rem 1rem',
                 }}
                 formatter={(value: number) => [`${value.toFixed(2)}g`, 'Mass']}
+                labelStyle={{
+                  color: '#60a5fa',
+                  fontWeight: 600,
+                  fontSize: '0.875rem',
+                }}
+                itemStyle={{
+                  color: '#e2e8f0',
+                  fontSize: '0.875rem',
+                }}
               />
               <Legend
                 verticalAlign="bottom"

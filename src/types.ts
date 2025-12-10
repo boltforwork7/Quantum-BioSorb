@@ -13,6 +13,7 @@ export interface StepDetail {
   scientific_explanation: string;
   safety_warning?: string;
   image_placeholder?: string;
+  image_filename?: string;
 }
 
 export interface ExperimentData {

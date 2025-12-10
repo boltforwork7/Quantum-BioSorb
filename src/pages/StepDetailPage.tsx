@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
@@ -9,9 +10,10 @@ import {
   Thermometer,
   Gauge,
   Box,
+  Upload,
 } from 'lucide-react';
 import { ExperimentData, StepDetail } from '../types';
-import { getStepById, getStepImage } from '../utils/stepGenerator';
+import { getStepById, getStepImage, getImageLoadFallback } from '../utils/stepGenerator';
 
 interface StepDetailPageProps {
   data: ExperimentData;
@@ -44,6 +46,7 @@ export default function StepDetailPage({ data, steps }: StepDetailPageProps) {
   const navigate = useNavigate();
   const { stepId } = useParams<{ stepId: string }>();
   const step = getStepById(steps, parseInt(stepId || '1'));
+  const [imageError, setImageError] = useState(false);
 
   if (!step) {
     return (
@@ -62,7 +65,8 @@ export default function StepDetailPage({ data, steps }: StepDetailPageProps) {
   }
 
   const statusStyle = statusConfig[step.status];
-  const imageUrl = getStepImage(step.id);
+  const imageUrl = getStepImage(step.id, step.image_filename);
+  const fallbackImageUrl = getImageLoadFallback(step.id);
 
   return (
     <motion.div
@@ -113,15 +117,35 @@ export default function StepDetailPage({ data, steps }: StepDetailPageProps) {
           className="relative mb-8 rounded-2xl overflow-hidden border border-slate-700/50 shadow-2xl group"
         >
           <div className="aspect-video relative bg-gradient-to-br from-slate-800 to-slate-900">
-            <img
-              src={imageUrl}
-              alt={`Step ${step.id}: ${step.title}`}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent" />
-            <div className="absolute bottom-4 left-4 text-slate-300">
-              <p className="text-sm text-slate-400">Lab Evidence</p>
-              <p className="text-lg font-semibold">{step.title} Stage</p>
+            {!imageError ? (
+              <>
+                <img
+                  src={imageUrl}
+                  alt={`Step ${step.id}: ${step.title}`}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  onError={() => setImageError(true)}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent" />
+              </>
+            ) : (
+              <>
+                <img
+                  src={fallbackImageUrl}
+                  alt={`Step ${step.id}: ${step.title} - Fallback`}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  onError={() => setImageError(true)}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/95 via-slate-900/70 to-transparent flex items-center justify-center">
+                  <div className="text-center">
+                    <Upload className="w-12 h-12 text-slate-500 mx-auto mb-2" />
+                    <p className="text-slate-400 text-sm">Upload Photo Here</p>
+                  </div>
+                </div>
+              </>
+            )}
+            <div className="absolute bottom-4 left-4 text-slate-300 bg-slate-900/60 px-4 py-2 rounded-lg backdrop-blur-sm">
+              <p className="text-sm text-slate-400">Step {step.id}</p>
+              <p className="text-lg font-semibold">{step.title}</p>
             </div>
           </div>
         </motion.div>
@@ -228,19 +252,24 @@ export default function StepDetailPage({ data, steps }: StepDetailPageProps) {
             Previous Step
           </motion.button>
 
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => navigate('/dashboard')}
-            className="px-6 py-3 bg-gradient-to-r from-cyan-600 to-emerald-600 hover:from-cyan-500 hover:to-emerald-500 text-white rounded-lg font-semibold transition-all"
-          >
-            Return to Dashboard
-          </motion.button>
+          <div className="flex items-center space-x-3">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => navigate('/dashboard')}
+              className="px-6 py-3 bg-gradient-to-r from-cyan-600 to-emerald-600 hover:from-cyan-500 hover:to-emerald-500 text-white rounded-lg font-semibold transition-all"
+            >
+              Return to Dashboard
+            </motion.button>
+            <span className="text-slate-400 font-mono text-sm">
+              Step {step.id} of {steps.length}
+            </span>
+          </div>
 
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            disabled={step.id === 6}
+            disabled={step.id === steps.length}
             onClick={() => navigate(`/protocol/${step.id + 1}`)}
             className="px-6 py-3 bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-600 text-white rounded-lg font-semibold transition-all"
           >

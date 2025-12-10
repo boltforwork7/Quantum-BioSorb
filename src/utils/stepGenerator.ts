@@ -1,14 +1,13 @@
 import { ExperimentData, StepDetail, StepParameter } from '../types';
 
 export function generateStepsFromData(data: ExperimentData): StepDetail[] {
-  const isBiocharInput = data.experiment_meta.input_type.toLowerCase() === 'biochar';
-
   const steps: StepDetail[] = [
     {
       id: 1,
-      title: 'Preparation',
-      description: `${data.biochar_prep.source_material_note}. ${data.biochar_prep.step_1}.`,
-      status: isBiocharInput ? 'completed' : 'in_progress',
+      title: 'Raw Material Preparation',
+      description: 'Cutting rice straw into small pieces (2-3 cm)',
+      status: 'completed',
+      image_filename: 'step1_cutting.jpg',
       parameters: [
         {
           label: 'Input Material',
@@ -19,15 +18,113 @@ export function generateStepsFromData(data: ExperimentData): StepDetail[] {
           value: data.experiment_meta.input_mass_g,
           unit: 'g',
         },
+        {
+          label: 'Target Piece Size',
+          value: '2-3',
+          unit: 'cm',
+        },
       ],
       scientific_explanation:
-        'The raw material must be ground to increase surface area and ensure uniform processing. Proper particle size distribution is essential for effective activation and pyrolysis in subsequent steps.',
+        'Cutting the rice straw into uniform pieces (2-3 cm) increases surface area exposure and ensures more uniform heating during pyrolysis. Consistent particle size is critical for reproducible results and efficient carbonization.',
     },
     {
       id: 2,
-      title: 'Activation',
-      description: data.biochar_prep.step_2_acid_wash,
-      status: isBiocharInput ? 'completed' : 'in_progress',
+      title: 'Reactor Sealing',
+      description: 'Placing straw in the oven/reactor, sealing all openings except for a gas exhaust vent',
+      status: 'completed',
+      image_filename: 'step2_sealing.jpg',
+      parameters: [
+        {
+          label: 'Sealing Method',
+          value: 'Airtight with exhaust vent',
+        },
+        {
+          label: 'Purpose',
+          value: 'Prevents oxygen entry',
+        },
+      ],
+      scientific_explanation:
+        'Proper sealing is essential to create an oxygen-free environment. Oxygen inhibits carbonization and promotes combustion instead. The exhaust vent allows volatile compounds to escape while maintaining anoxic conditions.',
+    },
+    {
+      id: 3,
+      title: 'Pyrolysis Process',
+      description: 'Heating the reactor to 350°C (maintain for 3 hours)',
+      status: 'critical',
+      image_filename: 'step3_pyrolysis.jpg',
+      parameters: [
+        {
+          label: 'Target Temperature',
+          value: 350,
+          unit: '°C',
+        },
+        {
+          label: 'Duration',
+          value: 3,
+          unit: 'hours',
+        },
+        {
+          label: 'Environment',
+          value: 'Oxygen-free',
+        },
+      ],
+      scientific_explanation:
+        `Heating to 350°C initiates the thermal decomposition of cellulose, hemicellulose, and lignin. This temperature range optimizes the development of porous structures without excessive volatilization. The 3-hour hold time ensures complete carbonization of the biomass and maximum surface area development.`,
+      safety_warning: 'High temperature process - ensure proper ventilation, safety equipment, and monitoring throughout heating and cooling cycles.',
+    },
+    {
+      id: 4,
+      title: 'Carbonization Result',
+      description: 'The rice straw transforms into Bio-Char (burned state)',
+      status: 'completed',
+      image_filename: 'step4_carbonization.jpg',
+      parameters: [
+        {
+          label: 'Product',
+          value: 'Bio-Char',
+        },
+        {
+          label: 'Calculated Mass',
+          value: data.experiment_meta.calculated_biochar_g,
+          unit: 'g',
+        },
+        {
+          label: 'Color',
+          value: 'Black/Dark Brown',
+        },
+      ],
+      scientific_explanation:
+        'Carbonization transforms the original biomass into a porous, carbon-rich material. The black color indicates successful conversion and the removal of hydrogen and oxygen-rich compounds. The resulting biochar retains the plant\'s cellular structure but in a solid, stable form.',
+    },
+    {
+      id: 5,
+      title: 'Physical Modification',
+      description: 'Grinding the Bio-Char into powder',
+      status: 'in_progress',
+      image_filename: 'step5_grinding.jpg',
+      parameters: [
+        {
+          label: 'Input',
+          value: 'Raw biochar pieces',
+        },
+        {
+          label: 'Output',
+          value: 'Fine powder',
+        },
+        {
+          label: 'Purpose',
+          value: 'Increase surface area',
+        },
+      ],
+      scientific_explanation:
+        'Grinding the biochar into powder further increases its specific surface area and improves the interaction surface available for chemical activation. Finer particles also ensure better distribution when mixing with the polymer binder matrix.',
+    },
+    {
+      id: 6,
+      title: 'Chemical Activation (Acid Wash)',
+      description: 'Soaking in 10% HCL concentration',
+      status: 'in_progress',
+      image_filename: 'step6_acid_wash.jpg',
       parameters: [
         {
           label: 'Chemical Agent',
@@ -35,106 +132,140 @@ export function generateStepsFromData(data: ExperimentData): StepDetail[] {
         },
         {
           label: 'Concentration',
-          value: 30,
+          value: 10,
           unit: '%',
         },
         {
           label: 'Duration',
-          value: 71,
-          unit: 'minutes',
+          value: data.biochar_prep.step_2_acid_wash,
         },
       ],
       scientific_explanation:
-        'Acid washing removes impurities and creates initial pore structures. This chemical activation step is critical for developing the high surface area needed for effective CO₂ adsorption. The HCl treatment opens up the biomass structure and prepares it for thermal transformation.',
+        'Acid washing chemically removes ash and mineral compounds, creating additional micro-pores in the biochar structure. This dramatically increases surface area and improves CO₂ adsorption capacity. HCl preferentially removes calcium, magnesium, and other cations.',
+      safety_warning: 'CRITICAL: Always add Acid to Water (1:3 ratio), NEVER the reverse. Adding water to concentrated acid causes violent exothermic reaction and splashing. Wear acid-resistant gloves, goggles, and work in well-ventilated area.',
     },
     {
-      id: 3,
-      title: 'Pyrolysis',
-      description: data.biochar_prep.step_3_pyrolysis,
-      status: isBiocharInput ? 'completed' : 'critical',
-      parameters: [
-        {
-          label: 'Temperature',
-          value: 572,
-          unit: '°C',
-        },
-        {
-          label: 'Target Surface Area',
-          value: data.prediction_metrics.Virtual_Surface_Area_m2g,
-          unit: 'm²/g',
-        },
-      ],
-      scientific_explanation: `Heating at 572°C is the most critical step for creating the porous structure. This specific temperature maximizes surface area development while maintaining structural integrity. The carbonization process creates the nanoscale pores that give biochar its exceptional CO₂ adsorption capacity.`,
-      safety_warning: 'High temperature process - ensure proper ventilation and safety equipment',
-    },
-    {
-      id: 4,
-      title: 'Matrix Preparation',
-      description: 'Dissolve calculated amounts of Starch and Gelatin in hot water with stirring until a clear gel is formed',
+      id: 7,
+      title: 'Soaking Phase',
+      description: 'The visible interaction during the soaking process',
       status: 'in_progress',
+      image_filename: 'step7_soaking.jpg',
       parameters: [
         {
-          label: 'Starch',
-          value: data.components_grams.Starch,
-          unit: 'g',
+          label: 'Medium',
+          value: 'HCl Solution',
         },
         {
-          label: 'Gelatin',
-          value: data.components_grams.Gelatin,
-          unit: 'g',
+          label: 'Reaction Type',
+          value: 'Acid-base interaction',
         },
         {
-          label: 'Glycerol',
-          value: data.components_grams.Glycerol,
-          unit: 'g',
-        },
-        {
-          label: 'Temperature',
-          value: 85,
-          unit: '°C',
+          label: 'Visual Indicator',
+          value: 'Bubbling, darkening',
         },
       ],
       scientific_explanation:
-        'This step creates the "glue" that binds biochar particles together. The temperature ensures proper gelatinization of the starch and complete dissolution of the gelatin. Glycerol is added as a plasticizer to prevent brittleness.',
+        'During soaking, HCl reacts with mineral oxides and basic compounds in the biochar, dissolving impurities and creating new pore structures. The bubbling indicates CO₂ release, confirming the activation process. The solution darkens due to leached compounds.',
     },
     {
-      id: 5,
-      title: 'Mixing',
-      description: `Mix at ${data.process_steps.mixing_temp_c}°C with stirring at ${data.process_steps.stirring_speed_rpm} RPM`,
+      id: 8,
+      title: 'Drying Phase',
+      description: 'Placing the activated char back into the oven for drying',
       status: 'in_progress',
+      image_filename: 'step8_drying.jpg',
       parameters: [
         {
           label: 'Temperature',
-          value: data.process_steps.mixing_temp_c,
+          value: 110,
           unit: '°C',
         },
-        {
-          label: 'Stirring Speed',
-          value: data.process_steps.stirring_speed_rpm,
-          unit: 'RPM',
-        },
-      ],
-      scientific_explanation: `The biochar is carefully dispersed into the polymer matrix. Temperature and stirring speed are optimized to ensure uniform distribution without damaging the biochar's porous structure.`,
-    },
-    {
-      id: 6,
-      title: 'Curing',
-      description: `Dry for ${data.process_steps.dry_hours} hours at ${data.process_steps.curing_temp_c}°C`,
-      status: 'pending',
-      parameters: [
         {
           label: 'Duration',
-          value: data.process_steps.dry_hours,
+          value: '2-4',
           unit: 'hours',
         },
         {
-          label: 'Temperature',
-          value: data.process_steps.curing_temp_c,
-          unit: '°C',
+          label: 'Purpose',
+          value: 'Remove residual moisture and acid',
         },
       ],
       scientific_explanation:
-        'Controlled drying removes water while allowing the polymer matrix to set properly. The low temperature and extended time prevent cracking and ensure the formation of a stable, non-brittle material.',
+        'Drying removes residual HCl solution and water from the biochar pores. Controlled temperature ensures the newly created pore structures remain open and accessible for CO₂ adsorption. Thorough drying is essential for consistent performance.',
+    },
+    {
+      id: 9,
+      title: 'Binder Preparation',
+      description: 'Image comparing two binders: Gelatin vs. Starch',
+      status: 'pending',
+      image_filename: 'step9_binder_prep.jpg',
+      parameters: [
+        {
+          label: 'Primary Binder',
+          value: 'Starch',
+          unit: `${data.components_grams.Starch}g`,
+        },
+        {
+          label: 'Secondary Binder',
+          value: 'Gelatin',
+          unit: `${data.components_grams.Gelatin}g`,
+        },
+        {
+          label: 'Plasticizer',
+          value: 'Glycerol',
+          unit: `${data.components_grams.Glycerol}g`,
+        },
+      ],
+      scientific_explanation:
+        'Starch and gelatin form a biodegradable polymer matrix that holds biochar particles together. Starch provides structural integrity while gelatin improves flexibility. Glycerol acts as a plasticizer, preventing brittleness and allowing the composite to flex without breaking.',
+    },
+    {
+      id: 10,
+      title: 'Membrane Casting',
+      description: 'Spreading the final mixture on a film (before drying)',
+      status: 'pending',
+      image_filename: 'step10_casting.jpg',
+      parameters: [
+        {
+          label: 'Total Mass',
+          value: data.experiment_meta.resulting_total_mass_g,
+          unit: 'g',
+        },
+        {
+          label: 'Biochar Concentration',
+          value: data.experiment_meta.biochar_concentration_percent,
+          unit: '%',
+        },
+        {
+          label: 'Support Material',
+          value: 'Film/Paper substrate',
+        },
+      ],
+      scientific_explanation:
+        'Spreading the biochar-binder mixture uniformly on a substrate creates a thin film composite. Even distribution ensures consistent CO₂ adsorption performance across the entire membrane. The substrate provides mechanical support during handling and drying.',
+    },
+    {
+      id: 11,
+      title: 'Final Product',
+      description: 'The dried, finished membrane sample',
+      status: 'pending',
+      image_filename: 'step11_final.jpg',
+      parameters: [
+        {
+          label: 'Final State',
+          value: 'Solid membrane',
+        },
+        {
+          label: 'Color',
+          value: 'Black/Dark brown',
+        },
+        {
+          label: 'Predicted CO₂ Uptake',
+          value: data.experiment_meta.predicted_batch_uptake_g,
+          unit: 'g',
+        },
+      ],
+      scientific_explanation:
+        'The finished membrane is a solid biochar-polymer composite ready for CO₂ adsorption studies. The combination of high surface area biochar and flexible polymer matrix creates an effective, mechanically stable material. The predicted batch uptake is based on the biochar\'s surface area and the loading percentage.',
     },
   ];
 
@@ -145,15 +276,24 @@ export function getStepById(steps: StepDetail[], stepId: number): StepDetail | u
   return steps.find((step) => step.id === stepId);
 }
 
-export const stepImageMap: Record<number, string> = {
-  1: 'https://drive.google.com/file/d/1v-pJmMcqSIb8JEoT04egbvOnG1Jc8ao0/view?usp=sharing',
-  2: 'https://images.pexels.com/photos/3825517/pexels-photo-3825517.jpeg?w=1200&h=800',
-  3: 'https://images.pexels.com/photos/5632399/pexels-photo-5632399.jpeg?w=1200&h=800',
-  4: 'https://images.pexels.com/photos/3196887/pexels-photo-3196887.jpeg?w=1200&h=800',
-  5: 'https://images.pexels.com/photos/3808517/pexels-photo-3808517.jpeg?w=1200&h=800',
-  6: 'https://images.pexels.com/photos/2433090/pexels-photo-2433090.jpeg?w=1200&h=800',
-};
+export function getStepImage(stepId: number, filename?: string): string {
+  const localImagePath = filename ? `/assets/steps/${filename}` : `/assets/steps/step${stepId}_placeholder.jpg`;
+  return localImagePath;
+}
 
-export function getStepImage(stepId: number): string {
-  return stepImageMap[stepId] || 'https://images.pexels.com/photos/3831857/pexels-photo-3831857.jpeg?w=1200&h=800';
+export function getImageLoadFallback(stepId: number): string {
+  const fallbacks: Record<number, string> = {
+    1: 'https://images.pexels.com/photos/5632399/pexels-photo-5632399.jpeg?w=1200&h=800',
+    2: 'https://images.pexels.com/photos/3825517/pexels-photo-3825517.jpeg?w=1200&h=800',
+    3: 'https://images.pexels.com/photos/5632399/pexels-photo-5632399.jpeg?w=1200&h=800',
+    4: 'https://images.pexels.com/photos/3196887/pexels-photo-3196887.jpeg?w=1200&h=800',
+    5: 'https://images.pexels.com/photos/3808517/pexels-photo-3808517.jpeg?w=1200&h=800',
+    6: 'https://images.pexels.com/photos/2433090/pexels-photo-2433090.jpeg?w=1200&h=800',
+    7: 'https://images.pexels.com/photos/3825517/pexels-photo-3825517.jpeg?w=1200&h=800',
+    8: 'https://images.pexels.com/photos/3808517/pexels-photo-3808517.jpeg?w=1200&h=800',
+    9: 'https://images.pexels.com/photos/3196887/pexels-photo-3196887.jpeg?w=1200&h=800',
+    10: 'https://images.pexels.com/photos/2433090/pexels-photo-2433090.jpeg?w=1200&h=800',
+    11: 'https://images.pexels.com/photos/3831857/pexels-photo-3831857.jpeg?w=1200&h=800',
+  };
+  return fallbacks[stepId] || 'https://images.pexels.com/photos/3831857/pexels-photo-3831857.jpeg?w=1200&h=800';
 }
