@@ -11,6 +11,8 @@ import {
   Gauge,
   Box,
   Upload,
+  Maximize2,
+  X,
 } from 'lucide-react';
 import { ExperimentData, StepDetail } from '../types';
 import { getStepById, getStepImage, getImageLoadFallback } from '../utils/stepGenerator';
@@ -47,6 +49,7 @@ export default function StepDetailPage({ data, steps }: StepDetailPageProps) {
   const { stepId } = useParams<{ stepId: string }>();
   const step = getStepById(steps, parseInt(stepId || '1'));
   const [imageError, setImageError] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   if (!step) {
     return (
@@ -147,8 +150,47 @@ export default function StepDetailPage({ data, steps }: StepDetailPageProps) {
               <p className="text-sm text-slate-400">Step {step.id}</p>
               <p className="text-lg font-semibold">{step.title}</p>
             </div>
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setIsFullscreen(true)}
+              className="absolute top-4 right-4 p-3 bg-slate-900/70 hover:bg-slate-800 text-cyan-400 rounded-lg backdrop-blur-sm border border-cyan-500/30 hover:border-cyan-500/60 transition-all opacity-0 group-hover:opacity-100"
+            >
+              <Maximize2 className="w-5 h-5" />
+            </motion.button>
           </div>
         </motion.div>
+
+        {/* Fullscreen Modal */}
+        {isFullscreen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center"
+          >
+            <motion.div
+              initial={{ scale: 0.9 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.9 }}
+              className="relative w-full h-full flex items-center justify-center p-4"
+            >
+              <img
+                src={imageError ? fallbackImageUrl : imageUrl}
+                alt={`Step ${step.id}: ${step.title} - Fullscreen`}
+                className="max-w-full max-h-full object-contain"
+              />
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setIsFullscreen(false)}
+                className="absolute top-6 right-6 p-3 bg-slate-800/70 hover:bg-slate-700 text-white rounded-lg border border-slate-700 transition-all"
+              >
+                <X className="w-6 h-6" />
+              </motion.button>
+            </motion.div>
+          </motion.div>
+        )}
 
         {/* Scientific Explanation */}
         <motion.div
