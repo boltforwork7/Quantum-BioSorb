@@ -283,7 +283,7 @@ export function getStepImage(stepId: number, filename?: string): string {
 
 export function getImageLoadFallback(stepId: number): string {
   const fallbacks: Record<number, string> = {
-    1: 'https://images.pexels.com/photos/5632399/pexels-photo-5632399.jpeg?w=1200&h=800',
+    1: '/home/project/assets/steps/step1.jpg',
     2: 'https://images.pexels.com/photos/3825517/pexels-photo-3825517.jpeg?w=1200&h=800',
     3: 'https://images.pexels.com/photos/5632399/pexels-photo-5632399.jpeg?w=1200&h=800',
     4: 'https://images.pexels.com/photos/3196887/pexels-photo-3196887.jpeg?w=1200&h=800',
