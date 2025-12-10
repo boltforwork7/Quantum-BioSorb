@@ -74,31 +74,6 @@ export function generateStepsFromData(data: ExperimentData): StepDetail[] {
     },
     {
       id: 4,
-      title: 'Initial Drying',
-      description: 'Drying at 115°C for 90 minutes',
-      status: 'completed',
-      image_filename: 'step4.jpg',
-      parameters: [
-        {
-          label: 'Temperature',
-          value: 115,
-          unit: '°C',
-        },
-        {
-          label: 'Duration',
-          value: 90,
-          unit: 'minutes',
-        },
-        {
-          label: 'Purpose',
-          value: 'Remove excess moisture',
-        },
-      ],
-      scientific_explanation:
-        'Initial drying at 115°C removes moisture from the material before further processing. This controlled temperature prevents thermal degradation while ensuring the material is properly dried for optimal carbonization and subsequent activation steps.',
-    },
-    {
-      id: 5,
       title: 'Carbonization Result',
       description: 'The rice straw transforms into Bio-Char (burned state)',
       status: 'completed',
@@ -122,7 +97,7 @@ export function generateStepsFromData(data: ExperimentData): StepDetail[] {
         'Carbonization transforms the original biomass into a porous, carbon-rich material. The black color indicates successful conversion and the removal of hydrogen and oxygen-rich compounds. The resulting biochar retains the plant\'s cellular structure but in a solid, stable form.',
     },
     {
-      id: 6,
+      id: 5,
       title: 'Physical Modification',
       description: 'Grinding the Bio-Char into powder',
       status: 'in_progress',
@@ -145,7 +120,7 @@ export function generateStepsFromData(data: ExperimentData): StepDetail[] {
         'Grinding the biochar into powder further increases its specific surface area and improves the interaction surface available for chemical activation. Finer particles also ensure better distribution when mixing with the polymer binder matrix.',
     },
     {
-      id: 7,
+      id: 6,
       title: 'Chemical Activation (Acid Wash)',
       description: 'Soak in HCL (5%) for 30-45 Minutes',
       status: 'in_progress',
@@ -171,7 +146,7 @@ export function generateStepsFromData(data: ExperimentData): StepDetail[] {
       safety_warning: 'CRITICAL: Always add Acid to Water (1:3 ratio), NEVER the reverse. Adding water to concentrated acid causes violent exothermic reaction and splashing. Wear acid-resistant gloves, goggles, and work in well-ventilated area.',
     },
     {
-      id: 8,
+      id: 7,
       title: 'Soaking Phase',
       description: 'The visible interaction during the soaking process',
       status: 'in_progress',
@@ -198,7 +173,7 @@ export function generateStepsFromData(data: ExperimentData): StepDetail[] {
       title: 'Drying Phase',
       description: 'Placing the activated char back into the oven for drying',
       status: 'in_progress',
-      image_filename: 'step9.jpg',
+      image_filename: 'step4.jpg',
       parameters: [
         {
           label: 'Temperature',
