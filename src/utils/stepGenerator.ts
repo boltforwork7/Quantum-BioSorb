@@ -173,7 +173,7 @@ export function generateStepsFromData(data: ExperimentData): StepDetail[] {
       title: 'Drying Phase',
       description: 'Placing the activated char back into the oven for drying',
       status: 'in_progress',
-      image_filename: 'step4.jpg',
+      image_filename: 'step8.jpg',
       parameters: [
         {
           label: 'Temperature',
