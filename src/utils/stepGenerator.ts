@@ -146,7 +146,7 @@ export function getStepById(steps: StepDetail[], stepId: number): StepDetail | u
 }
 
 export const stepImageMap: Record<number, string> = {
-  1: 'https://images.pexels.com/photos/207756/pexels-photo-207756.jpeg?w=1200&h=800',
+  1: 'https://drive.google.com/file/d/1v-pJmMcqSIb8JEoT04egbvOnG1Jc8ao0/view?usp=sharing',
   2: 'https://images.pexels.com/photos/3825517/pexels-photo-3825517.jpeg?w=1200&h=800',
   3: 'https://images.pexels.com/photos/5632399/pexels-photo-5632399.jpeg?w=1200&h=800',
   4: 'https://images.pexels.com/photos/3196887/pexels-photo-3196887.jpeg?w=1200&h=800',
