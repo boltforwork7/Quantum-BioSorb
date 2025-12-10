@@ -19,7 +19,7 @@
     "source_material_note": "Start with 19.0g Biochar",
     "step_1": "Grind Rice Straw",
     "step_2_acid_wash": "Soak in HCL (30%) for 71 minutes",
-    "step_3_pyrolysis": "Heat at 572°C",
+    "step_3_pyrolysis": "Heat at 350°C",
     "activation_goal": "Target Surface Area: 1349 m2/g"
   },
   "process_steps": {
