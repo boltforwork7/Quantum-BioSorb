@@ -198,7 +198,7 @@ export function generateStepsFromData(data: ExperimentData): StepDetail[] {
       title: 'Binder Preparation',
       description: 'Image comparing two binders: Gelatin vs. Starch',
       status: 'pending',
-      image_filename: 'step10.jpg',
+      image_filename: 'step9.jpg',
       parameters: [
         {
           label: 'Primary Binder',
