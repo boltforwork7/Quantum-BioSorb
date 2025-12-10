@@ -169,7 +169,7 @@ export function generateStepsFromData(data: ExperimentData): StepDetail[] {
         'During soaking, HCl reacts with mineral oxides and basic compounds in the biochar, dissolving impurities and creating new pore structures. The bubbling indicates CO₂ release, confirming the activation process. The solution darkens due to leached compounds.',
     },
     {
-      id: 9,
+      id: 8,
       title: 'Drying Phase',
       description: 'Placing the activated char back into the oven for drying',
       status: 'in_progress',
@@ -194,7 +194,7 @@ export function generateStepsFromData(data: ExperimentData): StepDetail[] {
         'Drying removes residual HCl solution and water from the biochar pores. Controlled temperature ensures the newly created pore structures remain open and accessible for CO₂ adsorption. Thorough drying is essential for consistent performance.',
     },
     {
-      id: 10,
+      id: 9,
       title: 'Binder Preparation',
       description: 'Image comparing two binders: Gelatin vs. Starch',
       status: 'pending',
@@ -220,7 +220,7 @@ export function generateStepsFromData(data: ExperimentData): StepDetail[] {
         'Starch and gelatin form a biodegradable polymer matrix that holds biochar particles together. Starch provides structural integrity while gelatin improves flexibility. Glycerol acts as a plasticizer, preventing brittleness and allowing the composite to flex without breaking.',
     },
     {
-      id: 11,
+      id: 10,
       title: 'Membrane Casting',
       description: 'Spreading the final mixture on a film (before drying)',
       status: 'pending',
