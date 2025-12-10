@@ -101,7 +101,7 @@ export function generateStepsFromData(data: ExperimentData): StepDetail[] {
       title: 'Physical Modification',
       description: 'Grinding the Bio-Char into powder',
       status: 'in_progress',
-      image_filename: 'step6.jpg',
+      image_filename: 'step5.jpg',
       parameters: [
         {
           label: 'Input',
