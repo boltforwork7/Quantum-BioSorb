@@ -124,7 +124,7 @@ export function generateStepsFromData(data: ExperimentData): StepDetail[] {
       title: 'Chemical Activation (Acid Wash)',
       description: 'Soak in HCL (5%) for 30-45 Minutes',
       status: 'in_progress',
-      image_filename: 'step7.jpg',
+      image_filename: 'step6.jpg',
       parameters: [
         {
           label: 'Chemical Agent',
