@@ -102,7 +102,7 @@ export function generateStepsFromData(data: ExperimentData): StepDetail[] {
       title: 'Carbonization Result',
       description: 'The rice straw transforms into Bio-Char (burned state)',
       status: 'completed',
-      image_filename: 'step5.jpg',
+      image_filename: 'step4.jpg',
       parameters: [
         {
           label: 'Product',
